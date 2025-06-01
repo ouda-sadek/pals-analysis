@@ -120,19 +120,50 @@ def load_data():
 
 df = load_data()
 
-# --- FILTRES ---
+# --- FILTRES AVEC BACKGROUND DYNAMIQUE ---
+# Appliquer un style dynamique à la sidebar
+st.markdown("""
+<style>
+/* Sidebar avec fond en dégradé animé rapidement */
+section[data-testid="stSidebar"] {
+    background: linear-gradient(-45deg, #f9d423, #ff4e50, #1e90ff, #00c9a7);
+    background-size: 300% 300%;
+    animation: gradientFlow 5s ease infinite;
+    color: white;
+    padding: 20px;
+    border-radius: 0 20px 20px 0;
+    min-height: 100vh;
+}
+
+/* Animation accélérée */
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Tous les textes blancs */
+section[data-testid="stSidebar"] * {
+    color: white !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 with st.sidebar:
     st.header("🎯 Filtres")
     names = st.multiselect("🔎 Nom du Pal", options=df["name"].unique(), default=[])
     tribes = st.multiselect("🧬 Tribu", options=df["tribe"].unique(), default=[])
     classes = st.multiselect("🏷️ Classe", options=df["bp_class"].unique(), default=[])
 
+
+# Application des filtres sur les données
 if names:
     df = df[df["name"].isin(names)]
 if tribes:
     df = df[df["tribe"].isin(tribes)]
 if classes:
     df = df[df["bp_class"].isin(classes)]
+
 
 # --- TABLEAU ---
 st.subheader("📋 Tableau des Pals")
@@ -159,7 +190,7 @@ with tab3:
 
 # --- FOOTER (affiché seulement à la fin de page) ---
 st.markdown("""
-<div style="text-align:center; padding:10px; color:#fff; background:#2c3e50; border-radius:10px; margin-top:30px;">
+<div style="text-align:center; padding:10px; color:#fff; background:#262730; border-radius:10px; margin-top:30px;">
     © 2024 Palworld Combat Dashboard | Créé avec ❤️ par <strong>Dina / Rayanne / Nassima</strong>
 </div>
 """, unsafe_allow_html=True)
