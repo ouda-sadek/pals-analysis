@@ -9,7 +9,7 @@ PORT = "3306"
 DB_NAME = "palworld_database"
 
 # Connection to the base
-engine = create_engine(f"mariadb+mariadbconnector://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME}")
+engine = create_engine(f"mariadb+mariadbconnector://root:Nassima_13@localhost:3306/palworld_database")
 
 # Upload CSV file
 csv_path = "./data/Palworld_Data--Palu combat attribute table.csv"
